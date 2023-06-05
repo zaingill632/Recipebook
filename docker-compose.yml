@@ -1,0 +1,26 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=zain
+      - DB_PASSWORD=7894
+      - DB_NAME=recipebookdb
+    depends_on:
+      - db
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=zain
+      - POSTGRES_PASSWORD=7894
+      - POSTGRES_DB=recipebookdb
+    ports:
+      - 4321:5432
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
